@@ -13,12 +13,12 @@ class FeedViewController: UIViewController {
         super.viewDidLoad()
         
      //   view.backgroundColor = .white // realizovano v Scene
+        view.backgroundColor = .white
                 
                 let button = UIButton()
                 button.setTitle("Перейти к посту", for: .normal)
                 button.setTitleColor(.systemBlue, for: .normal)
                 button.translatesAutoresizingMaskIntoConstraints = false
-        button.isHidden = false
                 
                 view.addSubview(button)
                 
@@ -28,14 +28,13 @@ class FeedViewController: UIViewController {
                     button.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
                 ])
                 
-             
+                button.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
             }
             
-             func didTapButton() {
+            @objc func didTapButton() {
                 let postVC = PostViewController()
                 postVC.selectedPost = "Выбранный пост" // передаем выбранный пост в PostViewController
                 navigationController?.pushViewController(postVC, animated: true) // делаем переход на экран поста
             }
         }
-
         // Do any additional setup after loading the view.

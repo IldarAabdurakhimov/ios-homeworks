@@ -13,9 +13,15 @@ class PostViewController: UIViewController {
             override func viewDidLoad() {
                 super.viewDidLoad()
                 
+                let infoButton = UIBarButtonItem(title: "Info", style: .plain, target: self, action: #selector(infoButtonTapped))
+                    navigationItem.rightBarButtonItem = infoButton
+                
+                          
+                
                 view.backgroundColor = .systemPink // меняем цвет главной view
                 title = selectedPost // меняем заголовок контроллера
-                            
+                                            
+         
                 let label = UILabel()
                 label.text = selectedPost
                 label.textAlignment = .center
@@ -29,7 +35,13 @@ class PostViewController: UIViewController {
                     label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
                     label.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30)
                 ])
+                
+                
+                }
+    @objc func infoButtonTapped() {
+        let infoViewController = InfoViewController()
+        let navController = UINavigationController(rootViewController: infoViewController)
+        present(navController, animated: true, completion: nil)
             }
         }
-        // Do any additional setup after loading the view.
-  
+      
