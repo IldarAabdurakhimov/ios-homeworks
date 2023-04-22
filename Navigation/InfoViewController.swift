@@ -20,23 +20,40 @@ class InfoViewController: UIViewController {
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         
-        view.addSubview(label)
+        
+        
+        let button = UIButton(type: .system)
+        button.setTitle("Показать UIAlertController", for: .normal)
+        button.addTarget(self, action: #selector(showAlertController), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(button)
         NSLayoutConstraint.activate([
-            label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            label.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+            button.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            button.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
     }
-    // Do any additional setup after loading the view.
+    
+    @objc private func showAlertController() {
+        // Создаем UIAlertController с заданным title и message
+        let alertController = UIAlertController(title: "Заголовок", message: "Сообщение", preferredStyle: .alert)
+        
+        // Создаем первый UIAlertAction
+        let firstAction = UIAlertAction(title: "Действие 1", style: .default) { _ in
+            print("Нажата кнопка Действие 1")
+        }
+        alertController.addAction(firstAction)
+        
+        // Создаем второй UIAlertAction
+        let secondAction = UIAlertAction(title: "Действие 2", style: .default) { _ in
+            print("Нажата кнопка Действие 2")
+        }
+        alertController.addAction(secondAction)
+        
+        // Показываем UIAlertController на экране
+        present(alertController, animated: true, completion: nil)
+    }
 }
 
-/*
- // MARK: - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
- // Get the new view controller using segue.destination.
- // Pass the selected object to the new view controller.
- }
- */
+
 
 
