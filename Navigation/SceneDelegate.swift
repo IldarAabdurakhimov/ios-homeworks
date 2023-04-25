@@ -8,53 +8,48 @@
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+    // Окно приложения
+    var window: UIWindow?
     
-    var window: UIWindow? = nil
-    
-    
-    
+    // Метод, вызываемый, когда сцена подключается к окну приложения
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
-        // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
-        // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         
-        
+        // Проверяем, является ли сцена типом UIWindowScene, иначе выходим из метода
         guard let windowScene = (scene as? UIWindowScene) else { return }
+        
+        // Создаем новое окно приложения
         let window = UIWindow(windowScene: windowScene)
         
+        // Создаем экраны для вкладок
         
+        // Экран для ленты
+        let feedVC = FeedViewController()
+        feedVC.title = "Feed"
+        feedVC.view.backgroundColor = .systemGreen
+        feedVC.tabBarItem.image = UIImage(named: "feed")
         
+        // Экран для профиля пользователя
+        let profileVC = ProfileViewController()
+        profileVC.title = "Profile"
+        profileVC.view.backgroundColor = .systemYellow
+        profileVC.tabBarItem.image = UIImage(named: "person")
         
-        let feedViewController = FeedViewController()
-        feedViewController.title = "Feed"
-        feedViewController.view.backgroundColor = .systemGreen
-        feedViewController.tabBarItem.image = UIImage(named: "feed")
-        
-        
-        let personViewController = ProfileViewController()
-        personViewController.title = "person"
-        personViewController.view.backgroundColor = .systemYellow
-        personViewController.tabBarItem.image = UIImage(named: "person")
-        
+        // Создаем контроллер вкладок и устанавливаем экраны для вкладок
         let tabBarController = UITabBarController()
+        let viewControllers = [feedVC, profileVC].map {
+            UINavigationController(rootViewController: $0)
+        }
+        tabBarController.setViewControllers(viewControllers, animated: false)
         
-        
-        //   feedViewController.tabBarItem = UITabBarItem(tabBarSystemItem: .favorites, tag: 0)
-        //  personViewController.tabBarItem = UITabBarItem(tabBarSystemItem: .more, tag: 1)
-        
-        let controllers = [feedViewController,personViewController]
-        tabBarController.viewControllers = controllers.map{UINavigationController(rootViewController: $0)}
-        
-        tabBarController.selectedIndex = 0
+        // Устанавливаем цвет фона для таббара и выбираем первую вкладку
         tabBarController.tabBar.backgroundColor = UIColor.brown
+        tabBarController.selectedIndex = 0
         
+        // Устанавливаем контроллер вкладок в качестве корневого для окна приложения и делаем окно видимым
         window.rootViewController = tabBarController
         window.makeKeyAndVisible()
         
+        // Устанавливаем окно приложения
         self.window = window
     }
-    
-    
-    
 }
-

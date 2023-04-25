@@ -1,47 +1,44 @@
-//
-//  PostViewController.swift
-//  Navigation
-//
-//  Created by Ildar on 17/4/2023.
-//
-
 import UIKit
 
 class PostViewController: UIViewController {
-    var selectedPost: String?
+    
+    var selectedPost: String? // переменная для хранения текста выбранного поста
+    
+    private lazy var label: UILabel = { // ленивое свойство для создания UILabel
+        let label = UILabel()
+        label.text = selectedPost // устанавливаем текст в label из переменной selectedPost
+        label.textAlignment = .center // центрируем текст внутри label
+        label.font = UIFont.systemFont(ofSize: 24) // устанавливаем шрифт для текста внутри label
+        label.translatesAutoresizingMaskIntoConstraints = false // отключаем автоматические констрейнты для label
+        return label
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let infoButton = UIBarButtonItem(title: "Info", style: .plain, target: self, action: #selector(infoButtonTapped))
+        let infoButton = UIBarButtonItem(title: "Info", style: .plain, target: self, action: #selector(infoButtonTapped))  // создаем и устанавливаем кнопку "Info" в правом верхнем углу навигационной панели
         navigationItem.rightBarButtonItem = infoButton
+        view.backgroundColor = .systemPink
+        title = selectedPost
+        view.addSubview(label) // добавляем label на главную view
+        constrPost() // вызываем функцию для установки констрейнтов
         
         
-        
-        view.backgroundColor = .systemPink // меняем цвет главной view
-        title = selectedPost // меняем заголовок контроллера
-        
-        
-        let label = UILabel()
-        label.text = selectedPost
-        label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 24)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        
-        view.addSubview(label)
-        
+    }
+    
+    
+    private func constrPost() {
+        // устанавливаем констрейнты для label, центрируя его по вертикали и располагая слева с отступом 20 и справа с отступом 30
         NSLayoutConstraint.activate([
             label.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            label.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30)
+            label.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
+            label.heightAnchor.constraint(equalToConstant: 30) // устанавливаем высоту label равной 30
         ])
-        
-        
     }
-    @objc func infoButtonTapped() {
-        let infoViewController = InfoViewController()
-        let navController = UINavigationController(rootViewController: infoViewController)
-        present(navController, animated: true, completion: nil)
+    
+    @objc private func infoButtonTapped() {
+        let infoViewController = InfoViewController() // создаем экземпляр контроллера InfoViewController
+        let navController = UINavigationController(rootViewController: infoViewController) // создаем UINavigationController с текущим контроллером в качестве корневого
+        present(navController, animated: true, completion: nil) // отображаем navController с анимацией
     }
 }
-

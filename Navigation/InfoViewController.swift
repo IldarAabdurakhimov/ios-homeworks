@@ -1,10 +1,3 @@
-//
-//  InfoViewController.swift
-//  Navigation
-//
-//  Created by Ildar on 20/4/2023.
-//
-
 import UIKit
 
 class InfoViewController: UIViewController {
@@ -19,41 +12,38 @@ class InfoViewController: UIViewController {
         label.text = "This is the info view controller"
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
-        
-        
+        view.addSubview(label)
         
         let button = UIButton(type: .system)
-        button.setTitle("Показать UIAlertController", for: .normal)
+        button.setTitle("Show UIAlertController", for: .normal)
         button.addTarget(self, action: #selector(showAlertController), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(button)
+        
         NSLayoutConstraint.activate([
+            label.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            label.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            label.heightAnchor.constraint(equalToConstant: 30),
+            
             button.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            button.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+            button.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 20)
         ])
     }
     
     @objc private func showAlertController() {
-        // Создаем UIAlertController с заданным title и message
-        let alertController = UIAlertController(title: "Заголовок", message: "Сообщение", preferredStyle: .alert)
+        let alertController = UIAlertController(title: "Title", message: "Message", preferredStyle: .alert)
         
-        // Создаем первый UIAlertAction
-        let firstAction = UIAlertAction(title: "Действие 1", style: .default) { _ in
-            print("Нажата кнопка Действие 1")
+        let firstAction = UIAlertAction(title: "Action 1", style: .default) { _ in
+            print("Action 1 button tapped")
         }
         alertController.addAction(firstAction)
         
-        // Создаем второй UIAlertAction
-        let secondAction = UIAlertAction(title: "Действие 2", style: .default) { _ in
-            print("Нажата кнопка Действие 2")
+        let secondAction = UIAlertAction(title: "Action 2", style: .default) { _ in
+            print("Action 2 button tapped")
         }
         alertController.addAction(secondAction)
         
-        // Показываем UIAlertController на экране
         present(alertController, animated: true, completion: nil)
     }
 }
-
-
-
-
