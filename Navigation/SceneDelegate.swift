@@ -31,7 +31,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Экран для профиля пользователя
         let profileVC = ProfileViewController()
         profileVC.title = "Profile"
-        profileVC.view.backgroundColor = .systemYellow
+      //  profileVC.view.backgroundColor = .systemYellow
         profileVC.tabBarItem.image = UIImage(named: "person")
         
         // Создаем контроллер вкладок и устанавливаем экраны для вкладок
