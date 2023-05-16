@@ -8,45 +8,48 @@
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-
+    // Окно приложения
     var window: UIWindow?
-
-
+    
+    // Метод, вызываемый, когда сцена подключается к окну приложения
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
-        // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
-        // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-        guard let _ = (scene as? UIWindowScene) else { return }
+        
+        // Проверяем, является ли сцена типом UIWindowScene, иначе выходим из метода
+        guard let windowScene = (scene as? UIWindowScene) else { return }
+        
+        // Создаем новое окно приложения
+        let window = UIWindow(windowScene: windowScene)
+        
+        // Создаем экраны для вкладок
+        
+        // Экран для ленты
+        let feedVC = FeedViewController()
+        feedVC.title = "Feed"
+        feedVC.view.backgroundColor = .systemGreen
+        feedVC.tabBarItem.image = UIImage(named: "feed")
+        
+        // Экран для профиля пользователя
+        let profileVC = ProfileViewController()
+        profileVC.title = "Profile"
+      //  profileVC.view.backgroundColor = .systemYellow
+        profileVC.tabBarItem.image = UIImage(named: "person")
+        
+        // Создаем контроллер вкладок и устанавливаем экраны для вкладок
+        let tabBarController = UITabBarController()
+        let viewControllers = [feedVC, profileVC].map {
+            UINavigationController(rootViewController: $0)
+        }
+        tabBarController.setViewControllers(viewControllers, animated: false)
+        
+        // Устанавливаем цвет фона для таббара и выбираем первую вкладку
+        tabBarController.tabBar.backgroundColor = UIColor.brown
+        tabBarController.selectedIndex = 0
+        
+        // Устанавливаем контроллер вкладок в качестве корневого для окна приложения и делаем окно видимым
+        window.rootViewController = tabBarController
+        window.makeKeyAndVisible()
+        
+        // Устанавливаем окно приложения
+        self.window = window
     }
-
-    func sceneDidDisconnect(_ scene: UIScene) {
-        // Called as the scene is being released by the system.
-        // This occurs shortly after the scene enters the background, or when its session is discarded.
-        // Release any resources associated with this scene that can be re-created the next time the scene connects.
-        // The scene may re-connect later, as its session was not necessarily discarded (see `application:didDiscardSceneSessions` instead).
-    }
-
-    func sceneDidBecomeActive(_ scene: UIScene) {
-        // Called when the scene has moved from an inactive state to an active state.
-        // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
-    }
-
-    func sceneWillResignActive(_ scene: UIScene) {
-        // Called when the scene will move from an active state to an inactive state.
-        // This may occur due to temporary interruptions (ex. an incoming phone call).
-    }
-
-    func sceneWillEnterForeground(_ scene: UIScene) {
-        // Called as the scene transitions from the background to the foreground.
-        // Use this method to undo the changes made on entering the background.
-    }
-
-    func sceneDidEnterBackground(_ scene: UIScene) {
-        // Called as the scene transitions from the foreground to the background.
-        // Use this method to save data, release shared resources, and store enough scene-specific state information
-        // to restore the scene back to its current state.
-    }
-
-
 }
-
